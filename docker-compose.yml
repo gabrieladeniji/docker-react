@@ -1,0 +1,20 @@
+version: '3'
+services: 
+    reactapp-web:
+        stdin_open: true
+        build:
+            context: .
+            dockerfile: dev.Dockerfile
+        ports: 
+            - "3000:3000"
+        volumes: 
+            - "/app/node_modules" # Do not map node_modules
+            - ".:/app" # Map everything else
+    tests:
+        build: 
+            context: .
+            dockerfile: dev.Dockerfile
+        volumes: 
+            - "/app/node_modules"
+            - ".:/app"
+        command: ["npm", "run", "test"]   
